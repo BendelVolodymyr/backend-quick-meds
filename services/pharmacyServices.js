@@ -1,11 +1,21 @@
+import HttpError from "../middlewares/HttpErrors.js";
 import { Inventory } from "../models/inventoriesModel.js";
 import { Pharmacy } from "../models/pharmacyModel.js";
 
-export async function listInventories(query) {
-  const { page = 1, limit = 10 } = query;
+export async function listInventories(id, query) {
+  const { page = 1, limit = 10, favorite } = query;
   const skip = (page - 1) * limit;
 
-  const data = await Inventory.find().skip(skip).limit(limit);
+  if (favorite !== undefined) {
+    filter.favorite = favorite;
+  }
+  const data = await Inventory.find({ ingredients: id }, "-scraped_at ", {
+    skip,
+    limit,
+  });
+  if (data.length === 0) {
+    throw HttpError(400, "Data not found");
+  }
   return data;
 }
 

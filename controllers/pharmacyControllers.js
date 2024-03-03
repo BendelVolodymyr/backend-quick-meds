@@ -2,7 +2,8 @@ import { listInventories, listPharmacy } from "../services/pharmacyServices.js";
 
 export const getAllInventories = async (req, res, next) => {
   try {
-    const inventory = await listInventories(req.query);
+    const { id } = req.params;
+    const inventory = await listInventories(id, req.query);
     res.status(200).json(inventory);
   } catch (error) {
     next(error);

@@ -6,6 +6,6 @@ import {
 
 const pharmacyRouter = express.Router();
 pharmacyRouter.get("/pharmacy", getAllPharmacy);
-pharmacyRouter.get("/inventories", getAllInventories);
+pharmacyRouter.get("/inventories/:id", getAllInventories);
 
 export default pharmacyRouter;
